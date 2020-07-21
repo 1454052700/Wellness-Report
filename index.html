@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Report</title>
+    <!-- js link -->
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+
+    <script src="js/diagram.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- css link -->
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/details.css">
+    <link rel="stylesheet" href="css/list.css">
+</head>
+
+<body>
+    <div id="firstVue">
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">{{reportData.ftReport.timeSlot}}</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <!-- goal [[ -->
+                    <div class="goal">
+                        <div class="goal__hd">
+                            <div class="goal__hd-title">Your Health in the {{reportData.ftReport.timeSlot}} & Compared to
+                                Your Goal
+                            </div>
+                            <div class="goal__hd-info">Average Cycle Days - {{reportData.ftReport.cycleDay}}</div>
+                        </div>
+                        <div class="goal__bd">
+                            <div class="goal__bd-item">
+                                <div class="goal__item-hd">
+                                    <img src="img/goal_icon_1.png" alt="" class="goal__hd-img">
+                                </div>
+                                <div class="goal__item-bd">
+                                    <div class="goal__bd-title">Average Resting Heart Rate (RHR)</div>
+                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averRestGoal}}% of Goal</div>
+                                </div>
+                            </div>
+                            <div class="goal__bd-item">
+                                <div class="goal__item-hd">
+                                    <img src="img/goal_icon_2.png" alt="" class="goal__hd-img">
+                                </div>
+                                <div class="goal__item-bd">
+                                    <div class="goal__bd-title">Average Weight</div>
+                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averWeightGoal}}% of Goal</div>
+                                </div>
+                            </div>
+                            <div class="goal__bd-item">
+                                <div class="goal__item-hd">
+                                    <img src="img/goal_icon_3.png" alt="" class="goal__hd-img">
+                                </div>
+                                <div class="goal__item-bd">
+                                    <div class="goal__bd-title">Average Daily Steps</div>
+                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averStepGoal}}% of Goal</div>
+                                </div>
+                            </div>
+                            <div class="goal__bd-item">
+                                <div class="goal__item-hd">
+                                    <img src="img/goal_icon_4.png" alt="" class="goal__hd-img">
+                                </div>
+                                <div class="goal__item-bd">
+                                    <div class="goal__bd-title">Average Daily Calories Burned</div>
+                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averCalorGoal}}% of Goal</div>
+                                </div>
+                            </div>
+                            <div class="goal__bd-item">
+                                <div class="goal__item-hd">
+                                    <img src="img/goal_icon_5.png" alt="" class="goal__hd-img">
+                                </div>
+                                <div class="goal__item-bd">
+                                    <div class="goal__bd-title">Average Daily Movement</div>
+                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averMoveGoal}}% of Goal</div>
+                                </div>
+                            </div>
+                            <div class="goal__bd-item">
+                                <div class="goal__item-hd">
+                                    <img src="img/goal_icon_6.png" alt="" class="goal__hd-img">
+                                </div>
+                                <div class="goal__item-bd">
+                                    <div class="goal__bd-title">Average Sleeping Hours</div>
+                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averSleepGoal}}% of Goal</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- goal ]] -->
+                    <!-- Guided programs [[ -->
+                    <div class="guide">
+                        <div class="guide__hd">
+                            <div class="guide__hd-title">Guided programs</div>
+                            <div class="guide_info">
+                                <div class="flex guideTH">
+                                    <p>GUIDED PROGRAMS</p>
+                                    <p>COMPLETION PERCENTAGE</p>
+                                </div>
+                                <div class="flex guideTR">
+                                    <p>7 Rules For Healthy Weight Loss</p>
+                                    <p>65%</p>
+                                </div>
+                                <div class="flex guideTR">
+                                    <p>Sleep Your Way to Weight Loss</p>
+                                    <p>81%</p>
+                                </div>
+                                <div class="flex guideTR">
+                                    <p>Burn Fat Insanely Fast with These Full-Body Exercises</p>
+                                    <p>65%</p>
+                                </div>
+                                <div class="flex guideTR">
+                                    <p>Six Sneaky Weightloss Saboteurs</p>
+                                    <p>81%</p>
+                                </div>
+                                <div class="flex guideTR">
+                                    <p>7 Rules For Healthy Weight Loss</p>
+                                    <p>65%</p>
+                                </div>
+                                <div class="flex guideTR">
+                                    <p>Sleep Your Way to Weight Loss</p>
+                                    <p>81%</p>
+                                </div>
+                                <div class="flex guideTR">
+                                    <p>Burn Fat Insanely Fast with These Full-Body Exercises</p>
+                                    <p>65%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Guided programs ]] -->
+
+                    <!--  report[[ -->
+                    <div class="report">
+                        <div class="report__title">Learn More About Your Report</div>
+                        <div class="report__items">
+                            <div class="report__item">
+                                <img src="img/goal_icon_1.png" alt="" class="report__item-img">
+                                <div class="report__item-bd">
+                                    <div class="report__item-title">Heart Rate</div>
+                                    <div class="report__item-ft">2</div>
+                                </div>
+                            </div>
+                            <div class="report__item">
+                                <img src="img/goal_icon_2.png" alt="" class="report__item-img">
+                                <div class="report__item-bd">
+                                    <div class="report__item-title">Weight </div>
+                                    <div class="report__item-ft">4</div>
+                                </div>
+                            </div>
+                            <div class="report__item">
+                                <img src="img/goal_icon_6.png" alt="" class="report__item-img">
+                                <div class="report__item-bd">
+                                    <div class="report__item-title">Sleep</div>
+                                    <div class="report__item-ft">6</div>
+                                </div>
+                            </div>
+                            <div class="report__item">
+                                <img src="img/goal_icon_7.png" alt="" class="report__item-img">
+                                <div class="report__item-bd">
+                                    <div class="report__item-title">Reproductive Health </div>
+                                    <div class="report__item-ft">7</div>
+                                </div>
+                            </div>
+                            <div class="report__item">
+                                <img src="img/goal_icon_5.png" alt="" class="report__item-img">
+                                <div class="report__item-bd">
+                                    <div class="report__item-title">Activity</div>
+                                    <div class="report__item-ft">8</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  report]] -->
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__details">The FitTrack Health Report allows you to get a detailed understanding
+                        of
+                        your
+                        whole body health. All data shown in this report has been tracked when using FitTrack products,
+                        along
+                        with any manual entries you may have done. The information provided in this report should not be
+                        a
+                        replacement for professional medical advice or diagnosis. FitTrack products report within a
+                        +/-3%
+                        accuracy of that of professional medical devices. Please consult your local medical professional
+                        for
+                        any
+                        further medical advice and recommendations.</div>
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">1</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__icon">
+                            <img class="group__icon-img" src="img/goal_icon_1.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <!-- 
+                        说明：
+                        .group__hd-another 另一种样式
+                    -->
+                            <div class="group__item-hd group__hd-another">
+                                <div class="group__item-title">Heart Rate</div>
+                                <div class="group__item-info">FitTrack smartwatches regularly track your heart rate in
+                                    the
+                                    form of beats per
+                                    minute (BPM) using photoplethysmography. You will see a green light on the bottom of
+                                    the
+                                    device that flickers
+                                    to detect the amount of blood volume when your heart beats </div>
+                            </div>
+                            <!-- 曲线图 -->
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportHeart.heartAvg}} bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportHeart.heartNow}} bpm</div>
+                                        <div class="group__data-info">latest</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportHeart.heartGoal}} bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_01.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <!-- Bpm exercise statistics [[ -->
+                            <div class="Bpm">
+                                <div class="bpm__hd">
+                                    <div class="bpm__hd-title">Bpm exercise statistics</div>
+                                    <div class="bpm__hd-title2">Every time you step on FitTrack Dara, 17 vital health
+                                        metrics are tracked in the FitTrack Health app. FitTrack Dara tracks:</div>
+                                    <div class="bpm_info">
+                                        <div class="flex bpmTH">
+                                            <p>EXERCISE</p>
+                                            <p>NUMBER OF REPETITIONS</p>
+                                            <p>PEAK BPM</p>
+                                            <p>AVRG BPM</p>
+                                            <p>AVRG GOAL BPM</p>
+                                        </div>
+                                        <div class="flex bpmTR">
+                                            <p>Apollo</p>
+                                            <p>6</p>
+                                            <p>65</p>
+                                            <p>36</p>
+                                            <p>64</p>
+                                        </div>
+                                        <div class="flex bpmTR">
+                                            <p>Squats</p>
+                                            <p>6</p>
+                                            <p>65</p>
+                                            <p>36</p>
+                                            <p>64</p>
+                                        </div>
+                                        <div class="flex bpmTR">
+                                            <p>Squats</p>
+                                            <p>6</p>
+                                            <p>65</p>
+                                            <p>36</p>
+                                            <p>64</p>
+                                        </div>
+                                        <div class="flex bpmTR">
+                                            <p>Squats</p>
+                                            <p>6</p>
+                                            <p>65</p>
+                                            <p>36</p>
+                                            <p>64</p>
+                                        </div>
+                                        <div class="flex bpmTR">
+                                            <p>Apollo</p>
+                                            <p>6</p>
+                                            <p>65</p>
+                                            <p>36</p>
+                                            <p>64</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Bpm exercise statistics ]]-->
+
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__details">* If you are not wearing Atria, then your heart rate will not be
+                        tracked.
+                        Large gaps
+                        in wear such as not wearing while you sleep will impact the accuracy for your daily, weekly, and
+                        monthly averages.</div>
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">2</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_02.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Resting Heart Rate (Also Known as Sleeping Heart Rate)
+                                </div>
+                                <div class="group__item-info">Resting Heart Rate/Sleeping Heart Rate is tracked when
+                                    your
+                                    body is at rest including being sedentary and/or asleep.</div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container2"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__details">* If you are not wearing Atria, then your heart rate will not be
+                        tracked.
+                        Large gaps
+                        in wear such as not wearing while you sleep will impact the accuracy for your daily, weekly, and
+                        monthly averages.</div>
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">3</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_03.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Peak Heart Rate</div>
+                                <div class="group__item-info">This is the total beats per minute while steps are being
+                                    taken. This is heart rate is different than your exercising heart rate as the impact
+                                    on
+                                    your body is much less than any of the 7 exercise modes</div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container3"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_04.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Sleeping Heart Rate</div>
+                                <div class="group__item-info">FitTrack Atria always-on heart rate tracking will continue
+                                    to
+                                    monitor your heart rate as you sleep. If you are someone who leads a fairly active
+                                    life,
+                                    this information will be different than resting heart rate. Ensure the watch strap
+                                    is
+                                    fitted tightly around your wrist to get the most accurate reading.
+                                </div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container4"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__details">* If you are not wearing Atria, then your heart rate will not be
+                        tracked.
+                        Large gaps
+                        in wear such as not wearing while you sleep will impact the accuracy for your daily, weekly, and
+                        monthly averages.</div>
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">4</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__icon">
+                            <img class="group__icon-img" src="img/goal_icon_2.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <!-- 
+                            说明：
+                            .group__hd-another 另一种样式
+                        -->
+                            <div class="group__item-hd group__hd-another">
+                                <div class="group__item-title">Weight</div>
+                                <div class="group__item-info">FitTrack Dara instantly measures your weight along with 16
+                                    other important health metrics. At FitTrack, we believe that you are more than just
+                                    a
+                                    number on a scale because one number isn’t a true representation of your health.
+                                    Regular
+                                    weigh-ins will accurately show your progression towards your goals. If you are using
+                                    other smart scales, the information from those products will not be tracked here.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/green_number_01.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Daily Average Weight for Past </span></div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container5"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-info">latest</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__details">* If you are not wearing Atria, then your heart rate will not be
+                        tracked.
+                        Large gaps
+                        in wear such as not wearing while you sleep will impact the accuracy for your daily, weekly, and
+                        monthly averages.</div>
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">5</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <!-- 序列号 -->
+                    <div class="serialNumber"></div>
+                    <div class="container">
+                        <div class="container__title">You’re More Than Just Your Weight</div>
+                        <div class="container__info">Every time you step on FitTrack Dara, 17 vital health metrics are
+                            tracked in the FitTrack Health app. FitTrack Dara tracks:</div>
+                        <div class="container__table">
+                            <div class="table__hd">
+                                <div class="table__hd-title">Measurement </div>
+                                <div class="table__hd-info">What It Is </div>
+                            </div>
+                            <div class="table__bd">
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Weight </div>
+                                    <div class="container__li-info">Total weight of yourself</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Body Mass Index </div>
+                                    <div class="container__li-info">A measure of body fat when compared to your height
+                                        and
+                                        weight</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Body Fat Percentage </div>
+                                    <div class="container__li-info">Total percentage of fatty tissue in your body</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Muscle Rate</div>
+                                    <div class="container__li-info">Total percentage of muscle in your body</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Body Water</div>
+                                    <div class="container__li-info">The total amount of fluid within the body</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Bone Mass</div>
+                                    <div class="container__li-info">Measurement of minerals (calcium and phosphorous) in
+                                        your body’s bones</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Basal Metabolic Rate</div>
+                                    <div class="container__li-info">The rate at which the body uses energy while at rest
+                                        to
+                                        keep vital functions going, such as breathing and keeping warm.</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Visceral Fat</div>
+                                    <div class="container__li-info">The body fat that is stored within the abdominal
+                                        area
+                                        surrounding organs</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Protein Mass</div>
+                                    <div class="container__li-info">The total amount of protein in the body measured in
+                                        lbs
+                                    </div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Protein Rate</div>
+                                    <div class="container__li-info">Percentage of protein found within the body</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Metabolic Age</div>
+                                    <div class="container__li-info">The amount of energy you burn in a day to keep your
+                                        body
+                                        functioning compared to your age</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Subcutaneous Fat</div>
+                                    <div class="container__li-info">The more visible, loose fat visible under the skin
+                                    </div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Standard Weight</div>
+                                    <div class="container__li-info">A fixed weight, to which all other weights and
+                                        measures
+                                        are required to correspond.</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Weight Control</div>
+                                    <div class="container__li-info">Indicates the difference between actual and standard
+                                        weight</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Fat Mass</div>
+                                    <div class="container__li-info">The ratio between body composition and fat tissue
+                                    </div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Weight WIthout Fat</div>
+                                    <div class="container__li-info">Omitting the body fat from weight to reflect current
+                                        health</div>
+                                </div>
+                                <div class="table__bd-li">
+                                    <div class="container__li-title">Muscle Mass</div>
+                                    <div class="container__li-info">Total muscle weight including skeletal, cardiac and
+                                        smooth muscle</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <!-- <div class="footer__details">The FitTrack Health Report allows you to get a detailed 
+                    understanding of your whole body health. All data shown in this report has been
+                     tracked when using FitTrack products, along with any manual entries you may 
+                     have done. The information provided in this report should not be a replacement
+                      for professional medical advice or diagnosis. FitTrack products report within 
+                      a +/-3% accuracy of that of professional medical devices. Please consult your
+                       local medical professional for any further medical advice and recommendations.</div> -->
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">6</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__icon">
+                            <img class="group__icon-img" src="img/goal_icon_6.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <!-- 
+                            说明：
+                            .group__hd-another 另一种样式
+                        -->
+                            <div class="group__item-hd group__hd-another">
+                                <div class="group__item-title">Sleep</div>
+                                <div class="group__item-info">FiTrack Atria tracks the time you spent asleep including
+                                    how
+                                    many hours you spent in light and deep sleep based on your heart rate and movement.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/green_number_01.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Sleep Duration</div>
+                                <div class="group__item-info">This is reported as total sleeping hours each night.
+                                    FitTrack
+                                    Atria will sync with FitTrack Health to track all data and the average sleeping
+                                    duration
+                                    is calculated from there. If you do not wear Atria while you sleep or the battery
+                                    dies,
+                                    there will be gaps in reporting. Manual sleep hour entry can affect the total
+                                    reported
+                                    averages.
+                                </div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container6"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportSleep.sleepAvg}} bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportSleep.sleepNow}} bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportSleep.sleepGoal}} bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/green_number_02.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Deep and Light Sleep</div>
+                                <div class="group__item-info">
+                                    While you sleep, your mind drifts in and out of two key sleep stages, light and deep
+                                    sleep. WIth light sleep, your body begins to slow and become more rested. Most
+                                    adults
+                                    spend about half of their time asleep in light sleep. Deep sleep is the next stage
+                                    after
+                                    light sleep where longer periods of sleep that occur in the first half of the night.
+                                    You
+                                    will feel refreshed in the morning after a deep sleep.
+                                </div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container7"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">7</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/green_number_03.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Sleep Schedule <span style="color:#61C2F3">(8h /
+                                        9h)</span>
+                                </div>
+                                <div class="group__item-info">Easily set when you plan on going to bed and when you plan
+                                    on
+                                    to wake up in the morning to track if you are achieving your total sleep hours goal.
+                                </div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container8"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">8</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_01.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Average Days of Cycle</span></div>
+                                <div class="group__item-info">This is reported as total sleeping hours each night.
+                                    FitTrack
+                                    Atria will sync with FitTrack Health to track all data and the average sleeping
+                                    duration
+                                    is calculated from there. If you do not wear Atria while you sleep or the battery
+                                    dies,
+                                    there will be gaps in reporting. Manual sleep hour entry can affect the total
+                                    reported
+                                    averages.</div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container9"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_02.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Last Period Dates</span></div>
+                                <div class="group__item-info">Learn when to expect your menstrual cycle to end based on
+                                    the
+                                    information you have entered into the FitTrack Health app.</div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container10"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">9</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__icon">
+                            <img class="group__icon-img" src="img/goal_icon_5.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <!-- 
+                            说明：
+                            .group__hd-another 另一种样式
+                        -->
+                            <div class="group__item-hd group__hd-another">
+                                <div class="group__item-title">Activity</div>
+                                <div class="group__item-info">FitTrack products use I​ NSERT TRACKING TECHNOLOGY t​ hat
+                                    monitor and track your daily movement including steps taken, calories burned,
+                                    distance traveled, daily sedentary time, and how many minutes you are active during
+                                    the day. You can use any of the 7 different exercise sport modes to accurately track
+                                    movement.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_01.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Calories</span></div>
+                                <div class="group__item-info">The total number of calories burned in a single day
+                                    calculated by the energy needed to raise the temperature of a certain amount of
+                                    water by one degree.</div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container11"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.caloriesAvg}} bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.caloriesNow}} bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.caloriesGobl}} bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_02.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Steps</div>
+                                <div class="group__item-info">Always-on movement tracking measured in steps taken.</div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container12"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.stepsAvg}} bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.stepsNow}} bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.stepsGobl}} bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">10</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_03.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Distance</span></div>
+                                <div class="group__item-info">FitTrack products actively measure distance traveled based
+                                    on the total number of steps taken.</div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container13"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.distanceAvg}} bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.distanceNow}} bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.distanceGobl}} bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">11</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_04.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Daily Active Minutes</div>
+                                <div class="group__item-info">Total time spent being active including exercising, using
+                                </div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container14"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.activeAvg}} bpm</div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.acticeNow}} bpm</div>
+                                        <div class="group__data-info">now</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.ftReportExercise.acticeGobl}} bpm</div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">12</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+    var myVue = new Vue({
+        el: "#firstVue",
+        data: {
+            reportData: {
+                ftReport: {},
+                ftReportExercise: {},
+                ftReportHeart: {},
+                ftReportSleep: {}
+            },
+            id:1,
+            HOST:'http://192.168.0.102:8085/'
+        },
+        created() {
+            this.report();
+        },
+        methods: {
+            report() {
+                axios({
+                    method: 'get',
+                    url: this.HOST+'report/get?id='+this.id
+                }).then(res=> {
+                    this.reportData = res.data.data;
+                }).catch(err => {
+                    console.log('请求失败:' + err.status + ',' + err.statusText);
+                });
+            }
+        }
+    })
+    var data = [{
+        y: 600,
+        name: 'Jan'
+    }, {
+        y: 71.5,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 300.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }, {
+        y: 76.0,
+        name: 'Jun'
+    }, {
+        y: 400,
+        name: 'Jul'
+    }, {
+        y: 148.5,
+        name: 'Aug'
+    }, {
+        y: 76,
+        name: 'Sep'
+    }, {
+        y: 87,
+        name: 'Oct'
+    }, {
+        y: 95.6,
+        name: 'Nov'
+    }, {
+        y: 54.4,
+        name: 'Dec'
+    }]
+    diagram('container', data, '#FF6951')
+
+    var data2 = [{
+        y: 600,
+        name: 'Jan'
+    }, {
+        y: 71.5,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 129.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }]
+    diagram('container2', data2, '#FF6951')
+
+    var data3 = [{
+        y: 600,
+        name: 'Jan'
+    }, {
+        y: 71.5,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 129.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }]
+    diagram('container3', data3, '#FF6951')
+
+    var data4 = [{
+        y: 600,
+        name: 'Jan'
+    }, {
+        y: 71.5,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 129.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }]
+    diagram('container4', data4, '#FF6951')
+
+    var data5 = [{
+        y: 600,
+        name: 'Jan'
+    }, {
+        y: 71.5,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 129.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }]
+    diagram('container5', data5, '#23CF9C')
+
+    var data6 = [{
+        y: 600,
+        name: 'Jan'
+    }, {
+        y: 71.5,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 129.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }]
+    diagram('container6', data6, '#61C2F3')
+
+    var data7 = [{
+        y: 600,
+        name: 'Jan'
+    }, {
+        y: 71.5,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 129.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }]
+    var dataTwo7 = [{
+        y: 150,
+        name: 'Jan'
+    }, {
+        y: 15,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 129.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }]
+    diagram('container7', data7, '#61C2F3', dataTwo7)
+
+    var data8 = [{
+        y: 600,
+        name: 'Jan'
+    }, {
+        y: 71.5,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 129.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }]
+    var dataTwo8 = [{
+        y: 150,
+        name: 'Jan'
+    }, {
+        y: 15,
+        name: 'Feb'
+    }, {
+        y: 106.4,
+        name: 'Mar'
+    }, {
+        y: 129.2,
+        name: 'Apr'
+    }, {
+        y: 44.0,
+        name: 'May'
+    }]
+    diagram('container8', data8, '#61C2F3', dataTwo8)
+
+    var data9 = [
+        {
+            y: 600,
+            name: 'Jan'
+        }, {
+            y: 71.5,
+            name: 'Feb'
+        }, {
+            y: 106.4,
+            name: 'Mar'
+        }, {
+            y: 300.2,
+            name: 'Apr'
+        }, {
+            y: 44.0,
+            name: 'May'
+        }, {
+            y: 76.0,
+            name: 'Jun'
+        }, {
+            y: 400,
+            name: 'Jul'
+        }, {
+            y: 148.5,
+            name: 'Aug'
+        }, {
+            y: 76,
+            name: 'Sep'
+        }, {
+            y: 87,
+            name: 'Oct'
+        }, {
+            y: 95.6,
+            name: 'Nov'
+        }, {
+            y: 54.4,
+            name: 'Dec'
+        }
+    ]
+    diagram('container9', data9, '#FF6951')
+
+    var data10 = [
+        {
+            y: 600,
+            name: 'Jan'
+        }, {
+            y: 71.5,
+            name: 'Feb'
+        }, {
+            y: 106.4,
+            name: 'Mar'
+        }, {
+            y: 129.2,
+            name: 'Apr'
+        }, {
+            y: 44.0,
+            name: 'May'
+        }
+    ]
+    diagram('container10', data10, '#FF6951')
+
+    var data11 = [
+        {
+            y: 600,
+            name: 'Jan'
+        }, {
+            y: 71.5,
+            name: 'Feb'
+        }, {
+            y: 106.4,
+            name: 'Mar'
+        }, {
+            y: 129.2,
+            name: 'Apr'
+        }, {
+            y: 44.0,
+            name: 'May'
+        }
+    ]
+    diagram('container11', data11, '#ffc15e')
+
+    var data12 = [
+        {
+            y: 600,
+            name: 'Jan'
+        }, {
+            y: 71.5,
+            name: 'Feb'
+        }, {
+            y: 106.4,
+            name: 'Mar'
+        }, {
+            y: 129.2,
+            name: 'Apr'
+        }, {
+            y: 44.0,
+            name: 'May'
+        }
+    ]
+    diagram('container12', data12, '#ffc15e')
+
+    var data13 = [
+        {
+            y: 600,
+            name: 'Jan'
+        }, {
+            y: 71.5,
+            name: 'Feb'
+        }, {
+            y: 106.4,
+            name: 'Mar'
+        }, {
+            y: 129.2,
+            name: 'Apr'
+        }, {
+            y: 44.0,
+            name: 'May'
+        }
+    ]
+    diagram('container13', data13, '#ffc15e')
+
+    var data14 = [
+        {
+            y: 600,
+            name: 'Jan'
+        }, {
+            y: 71.5,
+            name: 'Feb'
+        }, {
+            y: 106.4,
+            name: 'Mar'
+        }, {
+            y: 129.2,
+            name: 'Apr'
+        }, {
+            y: 44.0,
+            name: 'May'
+        }
+    ]
+    diagram('container14', data14, '#ffc15e')
+</script>

@@ -1,0 +1,310 @@
+.pagesize{
+    width: 100%;
+    border-bottom: 5px solid #e6e6e6;
+}
+.flex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.bpmTH{
+    background: #606473;
+    color: #fff;
+    font-size: 14px;
+    height: 60px;
+    line-height: 60px;
+    padding:0 20px;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.bpmTR{
+    color:rgba(51, 51, 51,0.9) ;
+    height: 60px;
+    line-height: 60px;
+    padding:0 20px;
+    font-weight: bold;
+}
+.bpmTR:nth-child(odd){
+    background: #fafbfc;
+}
+.bpm_info{
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.bpm__hd-title{
+    color: #202431;
+    font-size: 30px;
+    line-height: 45px;
+    margin: 50px 0;
+    margin-bottom: 20px;
+}
+.bpm__hd-title2{
+    margin-bottom: 50px;
+    color: rgba(32,36,49,0.7);
+    font-size: 16px;
+    line-height: 26px;
+}
+/* guide */
+.guideTH{
+    background: #606473;
+    color: #fff;
+    font-size: 14px;
+    height: 60px;
+    line-height: 60px;
+    padding:0 20px;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.guideTR{
+    color:rgba(51, 51, 51,0.9) ;
+    height: 60px;
+    line-height: 60px;
+    padding:0 20px;
+    font-weight: bold;
+}
+.guideTR:nth-child(odd){
+    background: #fafbfc;
+}
+.guide_info{
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.guide__hd-title{
+    color: #202431;
+    font-size: 30px;
+    line-height: 45px;
+    margin: 50px 0;
+}
+.goal{
+    padding-top: 40px;
+}
+.goal__hd{
+    position: relative;
+}
+.goal__hd-title{
+    width: 646px;
+    font-size: 30px;
+    color: #202431;
+    line-height: 45px;
+}
+.goal__hd-info{
+    position: absolute;
+    top:55px;
+    right: 0;
+    color: rgba(32,36,49,0.5);
+    font-size: 16px;
+    line-height: 22px;
+}
+.goal__bd{
+    position: relative;
+    padding: 80px 0;
+    display:inline-block;
+}
+.goal__bd:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid rgba(211,216,229,0.5);
+    left: 0;
+    bottom: 0;
+}
+.goal__bd-item{
+    box-sizing: border-box;
+    width: 356px;
+    height: 104px;
+    float: left;
+    box-shadow: 0 2px 12px 0 rgba(232,233,234,0.54);
+    border-radius: 8px;
+    margin-right: 24px;
+    margin-bottom: 24px;
+    display: flex;
+    padding: 25px 20px 0;
+}
+.goal__bd-item:nth-child(3n){
+    margin-right: 0;
+}
+.goal__bd-item:nth-child(n+4){
+    margin-bottom: 0;
+}
+.goal__item-hd{
+    margin-right: 16px;
+}
+.goal__hd-img{
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+.goal__item-bd{
+    flex: 1;
+}
+.goal__bd-title{
+    font-size: 16px;
+    color: rgba(32,36,49,0.7);
+    line-height: 22px;
+}
+.goal__bd-info{
+    margin-top: 4px;
+    font-size: 18px;
+    line-height: 28px;
+}
+.improve{
+    position: relative;
+    padding-top: 48px;
+    padding-bottom: 80px;
+}
+.improve:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid rgba(211,216,229,0.5);
+    left: 0;
+    bottom: 0;
+}
+.improve__hd-title{
+    color: #202431;
+    font-size: 30px;
+    line-height: 45px;
+}
+.improve__hd-info{
+    position: relative;
+    margin-top:16px;
+    color: #8BC34A;
+    font-size: 16px;
+    line-height: 18px;
+    padding-left: 28px;
+}
+.improve__info-icon{
+    position: absolute;
+    display: block;
+    width: 18px;
+    height: 18px;
+    left: 0;
+    top:0;
+    background: url('../img/lose_weight_icon.png') no-repeat;
+    background-size: 18px 18px;
+}
+.improve__bd{
+    margin-top: 48px;
+    display: inline-block;
+    width: 100%;
+}
+.improve__bd-left{
+    box-sizing: border-box;
+    float: left;
+    width: 736px;
+    height: 171px;
+    box-shadow: 0 2px 12px 0 rgba(232,233,234,0.54);
+    border-radius: 8px;
+    padding: 34px 24px;
+}
+.improve__left-info{
+    color: rgba(32,36,49,0.7);
+    font-size: 24px;
+    line-height: 34px;
+}
+.improve__bd-right{
+    box-sizing: border-box;
+    float: right;
+    width: 356px;
+    height: 171px;
+    box-shadow: 0 2px 12px 0 rgba(232,233,234,0.54);
+    border-radius: 8px;
+    padding: 24px;
+    padding-right: 12px;
+    display: flex;
+}
+.improve__right-img{
+    display: block;
+    width: 112px;
+    height: 113px;
+    border-radius: 3px;
+    margin-right: 12px;
+}
+.improve__right-content{
+    flex: 1;
+}
+.improve__content-title{
+    width: 153px;
+    color: #202431;
+    font-size: 14px;
+    line-height: 20px;
+}
+.improve__content-info{
+    margin-top: 14px;
+    font-size: 12px;
+    line-height: 20px;
+    color: rgba(32,36,49,0.7);
+}
+.improve__content-time{
+    margin-top: 11px;
+    text-align: right;
+    font-size: 10px;
+    color: #B9BFD0;
+    line-height: 12px;
+}
+.report{
+    margin-top: 48px;
+}
+.report__title{
+    font-size: 30px;
+    color: #202431;
+    line-height: 45px;
+}
+.report__items{
+    padding-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    /* border:1px solid black; */
+}
+.report__item{
+    display: flex;
+    width: 30%;
+    height: 40px;
+    padding-bottom: 4px;
+    align-items: center;
+    margin-bottom:24px ;
+    margin:1.5%;
+    /* border:1px solid red; */
+}
+.report__item:last-child{
+    margin-bottom: 0;
+}
+.report__item-img{
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: #ccc;
+    border-radius: 100%;
+    margin-right: 16px;
+}
+.report__item-bd{
+    position: relative;
+    flex: 1;
+    display: flex;
+    height: 100%;
+    justify-content:space-between;
+    align-items: center;
+}
+.report__item-bd:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid rgba(211,216,229,0.4);
+    left: 0;
+    bottom: -4px;
+}
+.report__item-title{
+    color: rgba(35,35,35,0.9);
+    font-size: 20px;
+    line-height: 28px;
+}
+.report__item-ft{
+    font-size: 20px;
+    line-height: 28px;
+    color: rgba(32,36,49,0.5);
+}

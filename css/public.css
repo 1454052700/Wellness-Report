@@ -1,0 +1,101 @@
+/* reset */
+html,body,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,pre,form,p,blockquote,fieldset,input,abbr,article,aside,command,details,figcaption,figure,footer,header,hgroup,mark,meter,nav,output,progress,section,summary,time { margin: 0; padding: 0; }
+h1,h2,h3,h4,h5,h6,pre,code,address,caption,cite,code,em,th,figcaption {font-weight: normal; font-style: normal; }
+fieldset,iframe { border: none; }
+caption,th { text-align: left; }
+table { border-collapse: collapse; border-spacing: 0; }
+ul{list-style:none outside;}
+ins{text-decoration:none;}
+article,aside,footer,header,hgroup,nav,section,figure,figcaption,details,summary { display: block; }
+/* ios相关 */
+a,button,input{-webkit-tap-highlight-color:rgba(0,0,0,0);
+-webkit-touch-callout:none;
+}
+/* 常用功能 */
+.clear { zoom:1; }
+.clear:after { content:'.'; display:block; height:0; clear:both; visibility:hidden; }
+
+/* body style */
+body{font-family: Helvetica;}
+
+/* show or hide*/
+.hide{display:none;}
+.show{display:block;}
+
+.wrpa{
+    width: 1200px;
+    /* padding:0 20px; */
+    box-sizing: border-box;
+    margin:0 auto;
+}
+
+.header{
+    position: relative;
+    padding-top: 69px;
+    padding-bottom: 16px;
+    overflow: hidden;
+}
+.header:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid rgba(211,216,229,0.5);
+    left: 0;
+    bottom: 0;
+}
+.header__logo{
+    float: left;
+    display: flex;
+}
+.header__logo-img{
+    width: 35px;
+    height: 27px;
+    display: block;
+    margin-right: 15px;
+}
+.header__logo-title{
+    font-size: 28px;
+    color: #202431;
+    line-height: 40px;
+}
+.header__info{
+    float: right;
+    font-size: 21px;
+    color: #9FA3AE;
+    line-height: 40px;
+}
+
+.footer{
+    margin-top: 147px;
+}
+.footer__details{
+    padding-bottom: 48px;
+    color: rgba(35,35,35,0.6);
+    font-size: 14px;
+    line-height: 26px;
+}
+.footer__fitTrack{
+    position: relative;
+    display: flex;
+    justify-content:space-between;
+    padding-top:20px;
+    padding-bottom: 40px;
+}
+.footer__fitTrack:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid rgba(159,163,174,0.5);
+    left: 0;
+    top: 0;
+}
+.footer__fitTrack-hd{
+    font-size: 20px;
+    color: #9FA3AE;
+    line-height: 28px;
+}
+.footer__fitTrack-ft{
+    font-size: 20px;
+    color: #9FA3AE;
+    line-height: 28px;
+}

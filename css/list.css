@@ -1,0 +1,75 @@
+.main{
+    position: relative;
+    padding-top: 39px;
+}
+.serialNumber{
+    position: absolute;
+    width: 47px;
+    height: 30px;
+    left: 0;
+    top:47px;
+    background: url('../img/green_number_02.png');
+    background-size: 47px 30px;
+}
+.container{
+    padding-left: 94px;
+}
+.container__title{
+    font-size: 30px;
+    color: #202431;
+    line-height: 45px;
+}
+.container__info{
+    margin-top: 16px;
+    color: rgba(32,36,49,0.7);
+    font-size: 16px;
+    line-height: 26px;
+}
+.container__bd{
+    margin-top: 80px;
+}
+.container__table{
+    margin-top: 80px;
+    box-shadow: 0 2px 12px 0 rgba(232,233,234,0.54);
+}
+.table__hd{
+    height: 60px;
+    background: #606573;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #FFFFFF;
+    line-height: 28px;
+}
+.table__hd-title{
+    box-sizing: border-box;
+    width: 360px;
+    padding-left: 29px;
+}
+.table__hd-info{
+    flex: 1;
+}
+.table__bd-li{
+    padding: 17px 0;
+    display: flex;
+    align-items: center;
+}
+.table__bd-li:nth-child(2n){
+    background: #FAFBFC;
+}
+.container__li-title{
+    box-sizing: border-box;
+    width: 360px;
+    padding-left: 29px;
+    font-size: 18px;
+    color: #232323;
+    line-height: 26px;
+}
+.container__li-info{
+    flex: 1;
+    font-size: 18px;
+    line-height: 30px;
+    color: rgba(35,35,35,0.8);
+    padding-right: 90px;
+}
