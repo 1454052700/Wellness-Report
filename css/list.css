@@ -8,7 +8,7 @@
     height: 30px;
     left: 0;
     top:47px;
-    background: url('../img/green_number_02.png');
+    /* background: url('../img/green_number_02.png'); */
     background-size: 47px 30px;
 }
 .container{

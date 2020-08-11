@@ -3,9 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wellness Report</title>
-    <!-- js link -->
+    <title>HtmlToPdf</title>
+
+    <script type="text/javascript" src="./js/canvg2.js"></script>
+    <script type="text/javascript" src="./js/html2canvas-0.4.1.js"></script>
+    <script type="text/javascript" src="./js/jspdf.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-2.1.4.min.js"></script>
+
+    <!-- css link -->
+    <link rel="stylesheet" href="./css/public.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/details.css">
+    <link rel="stylesheet" href="./css/list.css">
+
+    <!-- js -->
     <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
     <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
     <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
@@ -13,14 +24,12 @@
     <script src="js/diagram.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <!-- css link -->
-    <link rel="stylesheet" href="css/public.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/details.css">
-    <link rel="stylesheet" href="css/list.css">
 </head>
 
 <body>
+    <div class="upload_pdf">
+        <button id="downloadPdf">下载pdf</button>
+    </div>
     <div id="firstVue">
         <div class="pagesize">
             <div class="wrpa">
@@ -30,17 +39,18 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">{{reportData.ftReport.timeSlot}}</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
                     <!-- goal [[ -->
                     <div class="goal">
                         <div class="goal__hd">
-                            <div class="goal__hd-title">Your Health in the {{reportData.ftReport.timeSlot}} & Compared to
+                            <div class="goal__hd-title">Your Health in the {{reportData.timeSlot}} & Compared
+                                to
                                 Your Goal
                             </div>
-                            <div class="goal__hd-info">Average Cycle Days - {{reportData.ftReport.cycleDay}}</div>
+                            <div class="goal__hd-info">Average Cycle Days - 1234567890</div>
                         </div>
                         <div class="goal__bd">
                             <div class="goal__bd-item">
@@ -49,7 +59,9 @@
                                 </div>
                                 <div class="goal__item-bd">
                                     <div class="goal__bd-title">Average Resting Heart Rate (RHR)</div>
-                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averRestGoal}}% of Goal</div>
+                                    <div class="goal__bd-info">Achieved
+                                        {{reportData.averRestGoal?reportData.averRestGoal:0}}% of Goal
+                                    </div>
                                 </div>
                             </div>
                             <div class="goal__bd-item">
@@ -58,7 +70,9 @@
                                 </div>
                                 <div class="goal__item-bd">
                                     <div class="goal__bd-title">Average Weight</div>
-                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averWeightGoal}}% of Goal</div>
+                                    <div class="goal__bd-info">Achieved
+                                        {{reportData.averWeightGoal?reportData.averWeightGoal:0}}% of Goal
+                                    </div>
                                 </div>
                             </div>
                             <div class="goal__bd-item">
@@ -67,7 +81,9 @@
                                 </div>
                                 <div class="goal__item-bd">
                                     <div class="goal__bd-title">Average Daily Steps</div>
-                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averStepGoal}}% of Goal</div>
+                                    <div class="goal__bd-info">Achieved
+                                        {{reportData.averStepGoal?reportData.averStepGoal:0}}% of Goal
+                                    </div>
                                 </div>
                             </div>
                             <div class="goal__bd-item">
@@ -76,7 +92,9 @@
                                 </div>
                                 <div class="goal__item-bd">
                                     <div class="goal__bd-title">Average Daily Calories Burned</div>
-                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averCalorGoal}}% of Goal</div>
+                                    <div class="goal__bd-info">Achieved
+                                        {{reportData.averCalorGoal?reportData.averCalorGoal:0}}% of Goal
+                                    </div>
                                 </div>
                             </div>
                             <div class="goal__bd-item">
@@ -85,7 +103,9 @@
                                 </div>
                                 <div class="goal__item-bd">
                                     <div class="goal__bd-title">Average Daily Movement</div>
-                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averMoveGoal}}% of Goal</div>
+                                    <div class="goal__bd-info">Achieved
+                                        {{reportData.averMoveGoal?reportData.averMoveGoal:0}}% of Goal
+                                    </div>
                                 </div>
                             </div>
                             <div class="goal__bd-item">
@@ -94,7 +114,9 @@
                                 </div>
                                 <div class="goal__item-bd">
                                     <div class="goal__bd-title">Average Sleeping Hours</div>
-                                    <div class="goal__bd-info">Achieved {{reportData.ftReport.averSleepGoal}}% of Goal</div>
+                                    <div class="goal__bd-info">Achieved
+                                        {{reportData.averSleepGoal?reportData.averSleepGoal:0}}% of Goal
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -109,34 +131,12 @@
                                     <p>GUIDED PROGRAMS</p>
                                     <p>COMPLETION PERCENTAGE</p>
                                 </div>
-                                <div class="flex guideTR">
-                                    <p>7 Rules For Healthy Weight Loss</p>
-                                    <p>65%</p>
+                                <div class="flex guideTR" v-if="GuideData" v-for="(item,index) in GuideData"
+                                    :key="index">
+                                    <p>{{item.title}}</p>
+                                    <p>{{item.value}}%</p>
                                 </div>
-                                <div class="flex guideTR">
-                                    <p>Sleep Your Way to Weight Loss</p>
-                                    <p>81%</p>
-                                </div>
-                                <div class="flex guideTR">
-                                    <p>Burn Fat Insanely Fast with These Full-Body Exercises</p>
-                                    <p>65%</p>
-                                </div>
-                                <div class="flex guideTR">
-                                    <p>Six Sneaky Weightloss Saboteurs</p>
-                                    <p>81%</p>
-                                </div>
-                                <div class="flex guideTR">
-                                    <p>7 Rules For Healthy Weight Loss</p>
-                                    <p>65%</p>
-                                </div>
-                                <div class="flex guideTR">
-                                    <p>Sleep Your Way to Weight Loss</p>
-                                    <p>81%</p>
-                                </div>
-                                <div class="flex guideTR">
-                                    <p>Burn Fat Insanely Fast with These Full-Body Exercises</p>
-                                    <p>65%</p>
-                                </div>
+                                <div v-else>没数据</div>
                             </div>
                         </div>
                     </div>
@@ -167,13 +167,13 @@
                                     <div class="report__item-ft">6</div>
                                 </div>
                             </div>
-                            <div class="report__item">
+                            <!-- <div class="report__item">
                                 <img src="img/goal_icon_7.png" alt="" class="report__item-img">
                                 <div class="report__item-bd">
                                     <div class="report__item-title">Reproductive Health </div>
                                     <div class="report__item-ft">7</div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="report__item">
                                 <img src="img/goal_icon_5.png" alt="" class="report__item-img">
                                 <div class="report__item-bd">
@@ -216,7 +216,7 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
@@ -246,15 +246,17 @@
                                 </div>
                                 <div class="group__bd-data">
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportHeart.heartAvg}} bpm</div>
+                                        <div class="group__data-title">
+                                            {{HeartRateData.avgHeart?HeartRateData.avgHeart:0}} bpm</div>
                                         <div class="group__data-info">average</div>
                                     </div>
-                                    <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportHeart.heartNow}} bpm</div>
+                                    <!-- <div class="group__data-item">
+                                        <div class="group__data-title">{{HeartRateData.heartNow}} bpm</div>
                                         <div class="group__data-info">latest</div>
-                                    </div>
+                                    </div> -->
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportHeart.heartGoal}} bpm</div>
+                                        <div class="group__data-title">
+                                            {{HeartRateData.heartGoal?HeartRateData.heartGoal:0}} bpm</div>
                                         <div class="group__data-info">goal</div>
                                     </div>
                                 </div>
@@ -281,40 +283,12 @@
                                             <p>AVRG BPM</p>
                                             <p>AVRG GOAL BPM</p>
                                         </div>
-                                        <div class="flex bpmTR">
-                                            <p>Apollo</p>
-                                            <p>6</p>
-                                            <p>65</p>
-                                            <p>36</p>
-                                            <p>64</p>
-                                        </div>
-                                        <div class="flex bpmTR">
-                                            <p>Squats</p>
-                                            <p>6</p>
-                                            <p>65</p>
-                                            <p>36</p>
-                                            <p>64</p>
-                                        </div>
-                                        <div class="flex bpmTR">
-                                            <p>Squats</p>
-                                            <p>6</p>
-                                            <p>65</p>
-                                            <p>36</p>
-                                            <p>64</p>
-                                        </div>
-                                        <div class="flex bpmTR">
-                                            <p>Squats</p>
-                                            <p>6</p>
-                                            <p>65</p>
-                                            <p>36</p>
-                                            <p>64</p>
-                                        </div>
-                                        <div class="flex bpmTR">
-                                            <p>Apollo</p>
-                                            <p>6</p>
-                                            <p>65</p>
-                                            <p>36</p>
-                                            <p>64</p>
+                                        <div class="flex bpmTR" v-for="(item,index) in BpmData" :key="index">
+                                            <p>{{item.exercise}}</p>
+                                            <p>{{item.number}}</p>
+                                            <p>{{item.peakBpm}}</p>
+                                            <p>{{item.avgBpm}}</p>
+                                            <p>{{item.goalBpm}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -347,7 +321,7 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
@@ -357,7 +331,7 @@
                         </div>
                         <div class="group__item">
                             <div class="group__item-hd">
-                                <div class="group__item-title">Resting Heart Rate (Also Known as Sleeping Heart Rate)
+                                <div class="group__item-title">Resting Heart Rate
                                 </div>
                                 <div class="group__item-info">Resting Heart Rate/Sleeping Heart Rate is tracked when
                                     your
@@ -369,15 +343,17 @@
                                 </div>
                                 <div class="group__bd-data">
                                     <div class="group__data-item">
-                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-title">
+                                            {{RestHeartData.avgHeart?RestHeartData.avgHeart:0}} bpm</div>
                                         <div class="group__data-info">average</div>
                                     </div>
-                                    <div class="group__data-item">
+                                    <!-- <div class="group__data-item">
                                         <div class="group__data-title">75 bpm</div>
                                         <div class="group__data-info">now</div>
-                                    </div>
+                                    </div> -->
                                     <div class="group__data-item">
-                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-title">
+                                            {{RestHeartData.heartGoal?RestHeartData.heartGoal:0}} bpm</div>
                                         <div class="group__data-info">goal</div>
                                     </div>
                                 </div>
@@ -408,7 +384,7 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
@@ -430,15 +406,17 @@
                                 </div>
                                 <div class="group__bd-data">
                                     <div class="group__data-item">
-                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-title">
+                                            {{PeakHeartData.avgHeart?PeakHeartData.avgHeart:0}} bpm</div>
                                         <div class="group__data-info">average</div>
                                     </div>
-                                    <div class="group__data-item">
+                                    <!-- <div class="group__data-item">
                                         <div class="group__data-title">75 bpm</div>
                                         <div class="group__data-info">now</div>
-                                    </div>
+                                    </div> -->
                                     <div class="group__data-item">
-                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-title">
+                                            {{PeakHeartData.heartGoal?PeakHeartData.heartGoal:0}} bpm</div>
                                         <div class="group__data-info">goal</div>
                                     </div>
                                 </div>
@@ -466,8 +444,8 @@
                                     <div class="diagram__info" style="height: 227px;" id="container4"></div>
                                 </div>
                                 <div class="group__bd-data">
-                                    <div class="group__data-item">
-                                        <div class="group__data-title">85 bpm</div>
+                                    <!-- <div class="group__data-item">
+                                        <div class="group__data-title">0 bpm</div>
                                         <div class="group__data-info">average</div>
                                     </div>
                                     <div class="group__data-item">
@@ -477,7 +455,7 @@
                                     <div class="group__data-item">
                                         <div class="group__data-title">64 bpm</div>
                                         <div class="group__data-info">goal</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -506,7 +484,7 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
@@ -546,15 +524,18 @@
                                 </div>
                                 <div class="group__bd-data">
                                     <div class="group__data-item">
-                                        <div class="group__data-title">85 bpm</div>
+                                        <div class="group__data-title">{{WeightData.avgWeight?WeightData.avgWeight:0}}
+                                            bpm</div>
                                         <div class="group__data-info">average</div>
                                     </div>
                                     <div class="group__data-item">
-                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-title">{{WeightData.lastWeight?WeightData.lastWeight:0}}
+                                            bpm</div>
                                         <div class="group__data-info">latest</div>
                                     </div>
                                     <div class="group__data-item">
-                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-title">{{WeightData.weightGoal?WeightData.weightGoal:0}}
+                                            bpm</div>
                                         <div class="group__data-info">goal</div>
                                     </div>
                                 </div>
@@ -585,7 +566,7 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
@@ -716,7 +697,7 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
@@ -762,15 +743,15 @@
                                 </div>
                                 <div class="group__bd-data">
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportSleep.sleepAvg}} bpm</div>
+                                        <div class="group__data-title">{{SleepDurationData.avgSleep}} bpm</div>
                                         <div class="group__data-info">average</div>
                                     </div>
-                                    <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportSleep.sleepNow}} bpm</div>
+                                    <!-- <div class="group__data-item">
+                                        <div class="group__data-title">{{reportData.sleepNow}} bpm</div>
                                         <div class="group__data-info">now</div>
-                                    </div>
+                                    </div> -->
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportSleep.sleepGoal}} bpm</div>
+                                        <div class="group__data-title">{{SleepDurationData.sleepGoal}} bpm</div>
                                         <div class="group__data-info">goal</div>
                                     </div>
                                 </div>
@@ -800,16 +781,16 @@
                                     <div class="diagram__info" style="height: 227px;" id="container7"></div>
                                 </div>
                                 <div class="group__bd-data">
-                                    <div class="group__data-item">
-                                        <div class="group__data-title">85 bpm</div>
+                                    <!-- <div class="group__data-item">
+                                        <div class="group__data-title">0 bpm</div>
                                         <div class="group__data-info">average</div>
                                     </div>
                                     <div class="group__data-item">
-                                        <div class="group__data-title">75 bpm</div>
+                                        <div class="group__data-title">0 bpm</div>
                                         <div class="group__data-info">now</div>
-                                    </div>
+                                    </div> -->
                                     <div class="group__data-item">
-                                        <div class="group__data-title">64 bpm</div>
+                                        <div class="group__data-title">{{SleepDeepLightData.weightGoal}} bpm</div>
                                         <div class="group__data-info">goal</div>
                                     </div>
                                 </div>
@@ -835,7 +816,7 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
@@ -845,8 +826,8 @@
                         </div>
                         <div class="group__item">
                             <div class="group__item-hd">
-                                <div class="group__item-title">Sleep Schedule <span style="color:#61C2F3">(8h /
-                                        9h)</span>
+                                <div class="group__item-title">Sleep Schedule
+                                    <!-- <span style="color:#61C2F3">(8h / 9h)</span> -->
                                 </div>
                                 <div class="group__item-info">Easily set when you plan on going to bed and when you plan
                                     on
@@ -858,7 +839,7 @@
                                     <div class="diagram__info" style="height: 227px;" id="container8"></div>
                                 </div>
                                 <div class="group__bd-data">
-                                    <div class="group__data-item">
+                                    <!-- <div class="group__data-item">
                                         <div class="group__data-title">85 bpm</div>
                                         <div class="group__data-info">average</div>
                                     </div>
@@ -869,7 +850,7 @@
                                     <div class="group__data-item">
                                         <div class="group__data-title">64 bpm</div>
                                         <div class="group__data-info">goal</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -885,17 +866,17 @@
                 <!-- footer]] -->
             </div>
         </div>
-        <div class="pagesize">
+        <!-- <div class="pagesize">
             <div class="wrpa">
-                <!-- header[[ -->
+              
                 <header class="header">
                     <div class="header__logo">
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
-                <!-- header]] -->
+           
                 <div class="main">
                     <div class="group">
                         <div class="group__number">
@@ -968,16 +949,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- footer[[ -->
                 <footer class="footer">
                     <div class="footer__fitTrack">
                         <div class="footer__fitTrack-hd">FitTrack</div>
                         <div class="footer__fitTrack-ft">9</div>
                     </div>
                 </footer>
-                <!-- footer]] -->
             </div>
-        </div>
+        </div> -->
         <div class="pagesize">
             <div class="wrpa">
                 <!-- header[[ -->
@@ -986,7 +965,7 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
@@ -1026,15 +1005,21 @@
                                 </div>
                                 <div class="group__bd-data">
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.caloriesAvg}} bpm</div>
+                                        <div class="group__data-title">
+                                            {{CaloriesData.avgCalories?CaloriesData.avgCalories:0}} bpm
+                                        </div>
                                         <div class="group__data-info">average</div>
                                     </div>
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.caloriesNow}} bpm</div>
-                                        <div class="group__data-info">now</div>
+                                        <div class="group__data-title">
+                                            {{CaloriesData.lastCalories?CaloriesData.lastCalories:0}} bpm
+                                        </div>
+                                        <div class="group__data-info">latest</div>
                                     </div>
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.caloriesGobl}} bpm</div>
+                                        <div class="group__data-title">
+                                            {{CaloriesData.caloriesGoal?CaloriesData.caloriesGoal:0}} bpm
+                                        </div>
                                         <div class="group__data-info">goal</div>
                                     </div>
                                 </div>
@@ -1056,15 +1041,78 @@
                                 </div>
                                 <div class="group__bd-data">
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.stepsAvg}} bpm</div>
+                                        <div class="group__data-title">{{StepsData.avgSteps}} bpm
+                                        </div>
                                         <div class="group__data-info">average</div>
                                     </div>
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.stepsNow}} bpm</div>
+                                        <div class="group__data-title">{{StepsData.lastSteps}} bpm
+                                        </div>
+                                        <div class="group__data-info">latest</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">{{StepsData.stepsGoal}} bpm
+                                        </div>
+                                        <div class="group__data-info">goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer[[ -->
+                <footer class="footer">
+                    <div class="footer__fitTrack">
+                        <div class="footer__fitTrack-hd">FitTrack</div>
+                        <div class="footer__fitTrack-ft">9</div>
+                    </div>
+                </footer>
+                <!-- footer]] -->
+            </div>
+        </div>
+        <div class="pagesize">
+            <div class="wrpa">
+                <!-- header[[ -->
+                <header class="header">
+                    <div class="header__logo">
+                        <img src="img/logo.png" alt="" class="header__logo-img">
+                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
+                    </div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
+                </header>
+                <!-- header]] -->
+                <div class="main">
+                    <div class="group">
+                        <div class="group__number">
+                            <img class="group__number-img" src="img/red_number_03.png" alt="">
+                        </div>
+                        <div class="group__item">
+                            <div class="group__item-hd">
+                                <div class="group__item-title">Distance</span></div>
+                                <div class="group__item-info">FitTrack products actively measure distance traveled based
+                                    on the total number of steps taken.</div>
+                            </div>
+                            <div class="group__item-bd">
+                                <div class="group__bd-diagram">
+                                    <div class="diagram__info" style="height: 227px;" id="container13"></div>
+                                </div>
+                                <div class="group__bd-data">
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">
+                                            {{DistanceData.avgDistance?DistanceData.avgDistance:0}} bpm
+                                        </div>
+                                        <div class="group__data-info">average</div>
+                                    </div>
+                                    <div class="group__data-item">
+                                        <div class="group__data-title">
+                                            {{DistanceData.lastDistance?DistanceData.lastDistance:0}} bpm
+                                        </div>
                                         <div class="group__data-info">now</div>
                                     </div>
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.stepsGobl}} bpm</div>
+                                        <div class="group__data-title">
+                                            {{DistanceData.distanceGoal?DistanceData.distanceGoal:0}} bpm
+                                        </div>
                                         <div class="group__data-info">goal</div>
                                     </div>
                                 </div>
@@ -1090,61 +1138,7 @@
                         <img src="img/logo.png" alt="" class="header__logo-img">
                         <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
                     </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
-                </header>
-                <!-- header]] -->
-                <div class="main">
-                    <div class="group">
-                        <div class="group__number">
-                            <img class="group__number-img" src="img/red_number_03.png" alt="">
-                        </div>
-                        <div class="group__item">
-                            <div class="group__item-hd">
-                                <div class="group__item-title">Distance</span></div>
-                                <div class="group__item-info">FitTrack products actively measure distance traveled based
-                                    on the total number of steps taken.</div>
-                            </div>
-                            <div class="group__item-bd">
-                                <div class="group__bd-diagram">
-                                    <div class="diagram__info" style="height: 227px;" id="container13"></div>
-                                </div>
-                                <div class="group__bd-data">
-                                    <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.distanceAvg}} bpm</div>
-                                        <div class="group__data-info">average</div>
-                                    </div>
-                                    <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.distanceNow}} bpm</div>
-                                        <div class="group__data-info">now</div>
-                                    </div>
-                                    <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.distanceGobl}} bpm</div>
-                                        <div class="group__data-info">goal</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- footer[[ -->
-                <footer class="footer">
-                    <div class="footer__fitTrack">
-                        <div class="footer__fitTrack-hd">FitTrack</div>
-                        <div class="footer__fitTrack-ft">11</div>
-                    </div>
-                </footer>
-                <!-- footer]] -->
-            </div>
-        </div>
-        <div class="pagesize">
-            <div class="wrpa">
-                <!-- header[[ -->
-                <header class="header">
-                    <div class="header__logo">
-                        <img src="img/logo.png" alt="" class="header__logo-img">
-                        <div class="header__logo-title">Gloria’s FitTrack Health Report</div>
-                    </div>
-                    <div class="header__info">Apr 03, 2020 - Apr 01, 2019</div>
+                    <div class="header__info">{{reportData.timeSlot}}</div>
                 </header>
                 <!-- header]] -->
                 <div class="main">
@@ -1164,15 +1158,18 @@
                                 </div>
                                 <div class="group__bd-data">
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.activeAvg}} bpm</div>
+                                        <div class="group__data-title">{{DailyActiveMinutesData.avgDuration}} bpm
+                                        </div>
                                         <div class="group__data-info">average</div>
                                     </div>
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.acticeNow}} bpm</div>
+                                        <div class="group__data-title">{{DailyActiveMinutesData.lastDuration}} bpm
+                                        </div>
                                         <div class="group__data-info">now</div>
                                     </div>
                                     <div class="group__data-item">
-                                        <div class="group__data-title">{{reportData.ftReportExercise.acticeGobl}} bpm</div>
+                                        <div class="group__data-title">{{DailyActiveMinutesData.durationGoal}} bpm
+                                        </div>
                                         <div class="group__data-info">goal</div>
                                     </div>
                                 </div>
@@ -1184,380 +1181,583 @@
                 <footer class="footer">
                     <div class="footer__fitTrack">
                         <div class="footer__fitTrack-hd">FitTrack</div>
-                        <div class="footer__fitTrack-ft">12</div>
+                        <div class="footer__fitTrack-ft">11</div>
                     </div>
                 </footer>
                 <!-- footer]] -->
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#downloadPdf").click(function () {
+                var targetDom = $("#firstVue");
+                //把需要导出的pdf内容clone一份，这样对它进行转换、微调等操作时才不会影响原来界面
+                var copyDom = targetDom.clone();
+                //新的div宽高跟原来一样，高度设置成自适应，这样才能完整显示节点中的所有内容（比如说表格滚动条中的内容）
+                copyDom.width(targetDom.width() + "px");
+                copyDom.height(targetDom.height() + "px");
+
+                $('body').append(copyDom);//ps:这里一定要先把copyDom append到body下，然后再进行后续的glyphicons2canvas处理，不然会导致图标为空
+
+                svg2canvas(copyDom);
+                html2canvas(copyDom, {
+                    onrendered: function (canvas) {
+                        var imgData = canvas.toDataURL('image/png');
+                        var img = new Image();
+                        img.src = imgData;
+                        //根据图片的尺寸设置pdf的规格，要在图片加载成功时执行，之所以要*0.225是因为比例问题
+                        img.onload = function () {
+                            //此处需要注意，pdf横置和竖置两个属性，需要根据宽高的比例来调整，不然会出现显示不完全的问题
+                            if (this.width > this.height) {
+                                var doc = new jsPDF('l', 'mm', [this.width * 0.225, this.height * 0.225]);
+                            } else {
+                                var doc = new jsPDF('p', 'mm', [this.width * 0.225, this.height * 0.225]);
+                            }
+                            doc.addImage(imgData, 'PNG', 0, 0, this.width * 0.225, this.height * 0.225);
+                            //根据下载保存成不同的文件名
+                            doc.save('pdf_' + new Date().getTime() + '.pdf');
+                        };
+                        //删除复制出来的div
+                        copyDom.remove();
+                    },
+                    background: "#fff",
+                    //这里给生成的图片默认背景，不然的话，如果你的html根节点没设置背景的话，会用黑色填充。
+                    allowTaint: true //避免一些不识别的图片干扰，默认为false，遇到不识别的图片干扰则会停止处理html2canvas
+                });
+            });
+        });
+
+        function svg2canvas(targetElem) {
+            var svgElem = targetElem.find('svg');
+            svgElem.each(function (index, node) {
+                var parentNode = node.parentNode;
+                //由于现在的IE不支持直接对svg标签node取内容，所以需要在当前标签外面套一层div，通过外层div的innerHTML属性来获取
+                var tempNode = document.createElement('div');
+                tempNode.appendChild(node);
+                var svg = tempNode.innerHTML;
+                var canvas = document.createElement('canvas');
+                //转换
+                canvg(canvas, svg);
+                parentNode.appendChild(canvas);
+            });
+        }
+
+        function glyphicons2canvas(targetElem, fontClassName, fontFamilyName) {
+            var iconElems = targetElem.find('.' + fontClassName);
+            iconElems.each(function (index, inconNode) {
+                var fontSize = $(inconNode).css("font-size");
+                var iconColor = $(inconNode).css("color");
+                var styleContent = $(inconNode).attr('style');
+                //去掉"px"
+                fontSize = fontSize.replace("px", "");
+                var charCode = getCharCodeByGlyphiconsName(iconName);
+                var myCanvas = document.createElement('canvas');
+                //把canva宽高各增加2是为了显示图标完整
+                myCanvas.width = parseInt(fontSize) + 2;
+                myCanvas.height = parseInt(fontSize) + 2;
+                myCanvas.style = styleContent;
+                var ctx = myCanvas.getContext('2d');
+                //设置绘图内容的颜色
+                ctx.fillStyle = iconColor;
+                //设置绘图的字体大小以及font-family的名字
+                ctx.font = fontSize + 'px ' + fontFamilyName;
+                ctx.fillText(String.fromCharCode(charCode), 1, parseInt(fontSize) + 1);
+                $(inconNode).replaceWith(myCanvas);
+            });
+        }
+        //根据glyphicons/glyphicon图标的类名获取到对应的char code
+        function getCharCodeByGlyphiconsName(iconName) {
+            switch (iconName) {
+                case ("glyphicons-resize-full"):
+                    return "0xE216";
+                case ("glyphicons-chevron-left"):
+                    return "0xE225";
+                default:
+                    return "";
+            }
+        }
+
+        var myVue = new Vue({
+            el: "#firstVue",
+            data: {
+                reportData: {},
+                HeartRateData: {},
+                RestHeartData: {},
+                PeakHeartData: {},
+                WeightData: {},
+                SleepDurationData: {},
+                CaloriesData: {},
+                StepsData: {},
+                DistanceData: {},
+                DailyActiveMinutesData: {},
+                SleepDeepLightData: {},
+                GuideData: {},
+                BpmData: {},
+                SleepHeartData: {},
+                SleepScheduleData: {},
+                id: 1,
+                HOST: 'http://192.168.0.104:8085/',
+                // key:'3YDM1596767389136|39194|test|2|2020'
+                key: ''
+            },
+            created() {
+                if (window.location.href.indexOf("?") != -1) {
+                    this.key = window.location.href.split("?")[1];
+                    console.log(this.key, "key")
+                } else {
+                    alert("没有key")
+                }
+                // 
+                this.report();
+                this.reprotHeartRate();
+                this.reprotRestHeart();
+                this.reprotPeakHeart();
+                this.reprotWeight();
+                this.reprotSleepDuration();
+                this.reprotCalories();
+                this.reprotSteps();
+                this.reprotDistance();
+                this.reprotDailyActiveMinutes();
+                this.reprotSleepDeepLight();
+                this.reprotGuide();
+                this.reprotBpm();
+                this.reprotSleepHeart();
+                this.reprotSleepSchedule();
+            },
+            methods: {
+                report() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotHeadInfo',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        res.data.data.averRestGoal = res.data.data.averRestGoal.toFixed(2);
+                        res.data.data.averWeightGoal = res.data.data.averWeightGoal.toFixed(2);
+                        res.data.data.averStepGoal = res.data.data.averStepGoal.toFixed(2);
+                        res.data.data.averSleepGoal = res.data.data.averSleepGoal.toFixed(2);
+
+                        this.reportData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotHeartRate() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotHeartRate',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data = [];
+                        res.data.data.heartRate.forEach(i => {
+                            data.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container', data, '#FF6951')
+
+                        this.HeartRateData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotRestHeart() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotRestHeart',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data2 = [];
+                        res.data.data.heartRate.forEach(i => {
+                            data2.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container2', data2, '#FF6951')
+
+                        this.RestHeartData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotPeakHeart() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotPeakHeart',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data3 = [];
+                        res.data.data.heartRate.forEach(i => {
+                            data3.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container3', data3, '#FF6951')
+                        this.PeakHeartData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotWeight() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotWeight',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data5 = [];
+                        res.data.data.DailyAverageWeightForPast.forEach(i => {
+                            data5.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container5', data5, '#FF6951')
+                        this.WeightData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotSleepDuration() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotSleepDuration',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data6 = [];
+                        res.data.data.sleepDuration.forEach(i => {
+                            data6.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container6', data6, '#61C2F3')
+                        this.SleepDurationData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotCalories() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotCalories',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data11 = [];
+                        res.data.data.calories.forEach(i => {
+                            data11.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container11', data11, '#FF6951')
+                        this.CaloriesData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotSteps() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotSteps',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data12 = [];
+                        res.data.data.steps.forEach(i => {
+                            data12.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container12', data12, '#FF6951')
+                        this.StepsData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotDistance() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotDistance',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data13 = [];
+                        res.data.data.distance.forEach(i => {
+                            data13.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container13', data13, '#FF6951')
+                        this.DistanceData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotDailyActiveMinutes() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotDailyActiveMinutes',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data14 = [];
+                        res.data.data.dailyActiveMinutes.forEach(i => {
+                            data14.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container14', data14, '#FF6951')
+                        this.DailyActiveMinutesData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotSleepDeepLight() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotSleepDeepLight',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data7 = [];
+                        let dataTwo7 = [];
+                        res.data.data.deepLightSleep.deepSleeo.forEach(i => {
+                            data7.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        res.data.data.deepLightSleep.lightSleep.forEach(i => {
+                            dataTwo7.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container7', data7, '#61C2F3', dataTwo7)
+                        this.SleepDeepLightData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotGuide() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotGuide',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        this.GuideData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotBpm() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotBpm',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        this.BpmData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotSleepHeart() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotSleepHeart',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data4 = [];
+                        res.data.data.forEach(i => {
+                            data4.push({
+                                y: i.value,
+                                name: i.title
+                            })
+                        })
+                        diagram('container4', data4, '#FF6951')
+                        this.SleepHeartData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                },
+                reprotSleepSchedule() {
+                    axios({
+                        method: 'post',
+                        url: this.HOST + 'report/reprotSleepSchedule',
+                        data: {
+                            userId: this.key.split("|")[1],
+                            userName: this.key.split("|")[2],
+                            type: this.key.split("|")[3],
+                            timeValue: this.key.split("|")[4],
+                            key: this.key
+                        }
+                    }).then(res => {
+                        let data8 = [];
+                        let dataTwo8 = [];
+                        res.data.data.forEach(i => {
+                            data8.push({
+                                y:i.inSleep.split(" ")[1],
+                                name:i.inSleep.split(" ")[0],
+                            })
+                            dataTwo8.push({
+                                y:i.outSleep.split(" ")[1],
+                                name:i.outSleep.split(" ")[0],
+                            })
+                        })
+                        console.log(data8,dataTwo8)
+                        diagram('container8', data8, '#61C2F3', dataTwo8)
+                        this.SleepScheduleData = res.data.data;
+                    }).catch(err => {
+                        console.log('请求失败');
+                    });
+                }
+            }
+        })
+
+        var data8 = [{
+            y: 600,
+            name: 'Jan'
+        }, {
+            y: 71.5,
+            name: 'Feb'
+        }, {
+            y: 106.4,
+            name: 'Mar'
+        }, {
+            y: 129.2,
+            name: 'Apr'
+        }, {
+            y: 44.0,
+            name: 'May'
+        }]
+        var dataTwo8 = [{
+            y: 150,
+            name: 'Jan'
+        }, {
+            y: 15,
+            name: 'Feb'
+        }, {
+            y: 106.4,
+            name: 'Mar'
+        }, {
+            y: 129.2,
+            name: 'Apr'
+        }, {
+            y: 44.0,
+            name: 'May'
+        }]
+        diagram('container8', data8, '#61C2F3', dataTwo8)
+    </script>
+    <style>
+        .upload_pdf {
+            font-size: 24px;
+            text-align: right;
+            padding-right: 80px;
+            margin-top: 10px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        .upload_pdf button {
+            background: rgb(35, 207, 156);
+            border-radius: 8px;
+            border: 0;
+            height: 30px;
+            width: 70px;
+            line-height: 30px;
+            color: #fff;
+        }
+    </style>
+
 </body>
 
 </html>
-<script type="text/javascript">
-    var myVue = new Vue({
-        el: "#firstVue",
-        data: {
-            reportData: {
-                ftReport: {},
-                ftReportExercise: {},
-                ftReportHeart: {},
-                ftReportSleep: {}
-            },
-            id:1,
-            HOST:'http://192.168.0.102:8085/'
-        },
-        created() {
-            this.report();
-        },
-        methods: {
-            report() {
-                axios({
-                    method: 'get',
-                    url: this.HOST+'report/get?id='+this.id
-                }).then(res=> {
-                    this.reportData = res.data.data;
-                }).catch(err => {
-                    console.log('请求失败:' + err.status + ',' + err.statusText);
-                });
-            }
-        }
-    })
-    var data = [{
-        y: 600,
-        name: 'Jan'
-    }, {
-        y: 71.5,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 300.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }, {
-        y: 76.0,
-        name: 'Jun'
-    }, {
-        y: 400,
-        name: 'Jul'
-    }, {
-        y: 148.5,
-        name: 'Aug'
-    }, {
-        y: 76,
-        name: 'Sep'
-    }, {
-        y: 87,
-        name: 'Oct'
-    }, {
-        y: 95.6,
-        name: 'Nov'
-    }, {
-        y: 54.4,
-        name: 'Dec'
-    }]
-    diagram('container', data, '#FF6951')
-
-    var data2 = [{
-        y: 600,
-        name: 'Jan'
-    }, {
-        y: 71.5,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 129.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }]
-    diagram('container2', data2, '#FF6951')
-
-    var data3 = [{
-        y: 600,
-        name: 'Jan'
-    }, {
-        y: 71.5,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 129.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }]
-    diagram('container3', data3, '#FF6951')
-
-    var data4 = [{
-        y: 600,
-        name: 'Jan'
-    }, {
-        y: 71.5,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 129.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }]
-    diagram('container4', data4, '#FF6951')
-
-    var data5 = [{
-        y: 600,
-        name: 'Jan'
-    }, {
-        y: 71.5,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 129.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }]
-    diagram('container5', data5, '#23CF9C')
-
-    var data6 = [{
-        y: 600,
-        name: 'Jan'
-    }, {
-        y: 71.5,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 129.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }]
-    diagram('container6', data6, '#61C2F3')
-
-    var data7 = [{
-        y: 600,
-        name: 'Jan'
-    }, {
-        y: 71.5,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 129.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }]
-    var dataTwo7 = [{
-        y: 150,
-        name: 'Jan'
-    }, {
-        y: 15,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 129.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }]
-    diagram('container7', data7, '#61C2F3', dataTwo7)
-
-    var data8 = [{
-        y: 600,
-        name: 'Jan'
-    }, {
-        y: 71.5,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 129.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }]
-    var dataTwo8 = [{
-        y: 150,
-        name: 'Jan'
-    }, {
-        y: 15,
-        name: 'Feb'
-    }, {
-        y: 106.4,
-        name: 'Mar'
-    }, {
-        y: 129.2,
-        name: 'Apr'
-    }, {
-        y: 44.0,
-        name: 'May'
-    }]
-    diagram('container8', data8, '#61C2F3', dataTwo8)
-
-    var data9 = [
-        {
-            y: 600,
-            name: 'Jan'
-        }, {
-            y: 71.5,
-            name: 'Feb'
-        }, {
-            y: 106.4,
-            name: 'Mar'
-        }, {
-            y: 300.2,
-            name: 'Apr'
-        }, {
-            y: 44.0,
-            name: 'May'
-        }, {
-            y: 76.0,
-            name: 'Jun'
-        }, {
-            y: 400,
-            name: 'Jul'
-        }, {
-            y: 148.5,
-            name: 'Aug'
-        }, {
-            y: 76,
-            name: 'Sep'
-        }, {
-            y: 87,
-            name: 'Oct'
-        }, {
-            y: 95.6,
-            name: 'Nov'
-        }, {
-            y: 54.4,
-            name: 'Dec'
-        }
-    ]
-    diagram('container9', data9, '#FF6951')
-
-    var data10 = [
-        {
-            y: 600,
-            name: 'Jan'
-        }, {
-            y: 71.5,
-            name: 'Feb'
-        }, {
-            y: 106.4,
-            name: 'Mar'
-        }, {
-            y: 129.2,
-            name: 'Apr'
-        }, {
-            y: 44.0,
-            name: 'May'
-        }
-    ]
-    diagram('container10', data10, '#FF6951')
-
-    var data11 = [
-        {
-            y: 600,
-            name: 'Jan'
-        }, {
-            y: 71.5,
-            name: 'Feb'
-        }, {
-            y: 106.4,
-            name: 'Mar'
-        }, {
-            y: 129.2,
-            name: 'Apr'
-        }, {
-            y: 44.0,
-            name: 'May'
-        }
-    ]
-    diagram('container11', data11, '#ffc15e')
-
-    var data12 = [
-        {
-            y: 600,
-            name: 'Jan'
-        }, {
-            y: 71.5,
-            name: 'Feb'
-        }, {
-            y: 106.4,
-            name: 'Mar'
-        }, {
-            y: 129.2,
-            name: 'Apr'
-        }, {
-            y: 44.0,
-            name: 'May'
-        }
-    ]
-    diagram('container12', data12, '#ffc15e')
-
-    var data13 = [
-        {
-            y: 600,
-            name: 'Jan'
-        }, {
-            y: 71.5,
-            name: 'Feb'
-        }, {
-            y: 106.4,
-            name: 'Mar'
-        }, {
-            y: 129.2,
-            name: 'Apr'
-        }, {
-            y: 44.0,
-            name: 'May'
-        }
-    ]
-    diagram('container13', data13, '#ffc15e')
-
-    var data14 = [
-        {
-            y: 600,
-            name: 'Jan'
-        }, {
-            y: 71.5,
-            name: 'Feb'
-        }, {
-            y: 106.4,
-            name: 'Mar'
-        }, {
-            y: 129.2,
-            name: 'Apr'
-        }, {
-            y: 44.0,
-            name: 'May'
-        }
-    ]
-    diagram('container14', data14, '#ffc15e')
-</script>
